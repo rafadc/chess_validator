@@ -1,3 +1,5 @@
+require_relative './piece_factory'
+
 class Piece
 
   def initialize(board, origin, destination)
@@ -7,13 +9,8 @@ class Piece
   end
 
   def can_move?
-    return BlackPawn.new(@origin, @destination).can_move? if ["bP"].include? @board[@origin]
-    return WhitePawn.new(@origin, @destination).can_move? if ["wP"].include? @board[@origin]
-    return Knight.new(@origin, @destination).can_move? if ["wN", "bN"].include? @board[@origin]
-    return Rook.new(@origin, @destination).can_move? if ["wR", "bR"].include? @board[@origin]
-    return Bishop.new(@origin, @destination).can_move? if ["wB", "bB"].include? @board[@origin]
-    return Queen.new(@origin, @destination).can_move? if ["wB", "bB"].include? @board[@origin]
-    return King.new(@origin, @destination).can_move? if ["wB", "bB"].include? @board[@origin]
+    piece = PieceFactory.for(@board[@origin], @origin, @destination)
+    piece.can_move? if piece
   end
 end
 
