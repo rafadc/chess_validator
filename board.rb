@@ -18,7 +18,12 @@ class ChessBoard
   def check_move(move)
     origin = move.slice(0,2)
     destination = move.slice(3,2)
-    Piece.new(@board, origin, destination).can_move? && destination_free(destination)? "LEGAL" : "ILLEGAL"
+    piece = PieceFactory.for(@board, origin, destination)
+    if piece && piece.can_move? && destination_free(destination)
+      "LEGAL"
+    else
+      "ILLEGAL"
+    end
   end
 
   def load_board(file)
