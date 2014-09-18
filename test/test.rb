@@ -13,11 +13,11 @@ require_relative '../board'
 
 board1 = ChessBoard.new
 
-# smoves = File.open('simple_moves.txt', 'r')
-# smoves.each do |x|
-#   puts board1.check_move(x)
-# end
-# smoves.close
+smoves = File.open('simple_moves.txt', 'r')
+smoves.each do |x|
+  puts board1.check_move(x)
+end
+smoves.close
 
 # puts board1.check("a7 a6")
 # puts board1.check("a7 a5")
@@ -40,4 +40,4 @@ board1 = ChessBoard.new
 
 # puts horse.can_move?("e5", "g9")
 
-puts board1.check_move("b8 a6")
+# puts board1.check_move("b8 a6")

@@ -17,7 +17,11 @@ class ChessBoard
   def check_move(move)
     origin = move.slice(0,2)
     destination = move.slice(3,2)
-    Piece.new(@board, origin, destination).can_move? ? "LEGAL" : "ILLEGAL"
+    Piece.new(@board, origin, destination).can_move? && destination_free(destination)? "LEGAL" : "ILLEGAL"
+  end
+
+  def destination_free(destination)
+    @board[destination] == "--"
   end
 
 
@@ -35,19 +39,14 @@ class Piece
 
   def initialize(board, origin, destination)
     @board = board
-    @destination = destination
     @origin = origin
-  end
-
-  def destination_free
-    @board[@destination] == "--"
+    @destination = destination
   end
 
   def can_move?
-binding.pry
-    return BlackPawn.new.can_move?(@origin, @destination) if @board[@origin]=="bP" && destination_free
-    return WhitePawn.new.can_move?(@origin, @destination) if @board[@origin]=="wP" && destination_free
-    return Knight.new.can_move?(@origin, @destination) if ["wN", "bN"].include? @board[@origin] && destination_free
+    return BlackPawn.new.can_move?(@origin, @destination) if @board[@origin]=="bP"
+    return WhitePawn.new.can_move?(@origin, @destination) if @board[@origin]=="wP"
+    return Knight.new.can_move?(@origin, @destination) if ["wN", "bN"].include? @board[@origin]
   end
 end
 
@@ -78,7 +77,6 @@ end
 
 class Knight
   def can_move?(origin, destination)
-binding.pry
     origin_row = origin.slice(1,1).to_i
     origin_col = origin.slice(0,1).ord
     destination_row = destination.slice(1,1).to_i
