@@ -24,15 +24,25 @@ class ChessBoard
     @board[destination] == "--"
   end
 
+  def load_board(file)
+    # unfinished !!!!!!!!!!!!!!!!!!!!!!!!!!
+    file = File.open(file, 'r')
+    file.each do |line|
+      row = line.split(" ")
+
+    end
+    file.close
+  end
+
 
 end
 # class Rook
 #   def can_move?(origin,destination)
-#     origin_row = origin.slice(1,1)
-#     origin_col = origin.slice(0,1)
-#     destination_row = destination.slice(1,1)
-#     destination_col = destination.slice(0,1)
-#     result = (destination_row == origin_row) || (destination_col == origin_col)
+#     @origin_row = @origin.slice(1,1)
+#     @origin_col = @origin.slice(0,1)
+#     @destination_row = @destination.slice(1,1)
+#     @destination_col = @destination.slice(0,1)
+#     result = (@destination_row == @origin_row) || (@destination_col == @origin_col)
 #   end
 # end
 class Piece
@@ -44,51 +54,46 @@ class Piece
   end
 
   def can_move?
-    return BlackPawn.new.can_move?(@origin, @destination) if @board[@origin]=="bP"
-    return WhitePawn.new.can_move?(@origin, @destination) if @board[@origin]=="wP"
-    return Knight.new.can_move?(@origin, @destination) if ["wN", "bN"].include? @board[@origin]
+    return BlackPawn.new(@origin, @destination).can_move? if @board[@origin]=="bP"
+    return WhitePawn.new(@origin, @destination).can_move? if @board[@origin]=="wP"
+    return Knight.new(@origin, @destination).can_move? if ["wN", "bN"].include? @board[@origin]
   end
 end
 
-
-class WhitePawn
-  def can_move?(origin, destination)
-    origin_row = origin.slice(1,1).to_i
-    origin_col = origin.slice(0,1)
-    destination_row = destination.slice(1,1).to_i
-    destination_col = destination.slice(0,1)
-    result =  (origin_col == destination_col) && 
-        ((destination_row == origin_row+1 && origin_row > 2) || 
-        (destination_row <= origin_row+2 && origin_row == 2))
+class MoveCoordinates
+  def initialize(origin, destination)
+    @origin_row = origin.slice(1,1).to_i
+    @origin_col = origin.slice(0,1).ord
+    @destination_row = destination.slice(1,1).to_i
+    @destination_col = destination.slice(0,1).ord
   end
 end
 
-class BlackPawn
-  def can_move?(origin, destination)
-    origin_row = origin.slice(1,1).to_i
-    origin_col = origin.slice(0,1)
-    destination_row = destination.slice(1,1).to_i
-    destination_col = destination.slice(0,1)
-    result =  (origin_col == destination_col) && 
-            ((destination_row == origin_row-1 && origin_row < 7) || 
-              (destination_row >= origin_row-2 && origin_row == 7))
+class WhitePawn < MoveCoordinates
+  def can_move?
+    result =  (@origin_col == @destination_col) && 
+        ((@destination_row == @origin_row+1 && @origin_row > 2) || 
+        (@destination_row <= @origin_row+2 && @origin_row == 2))
   end
 end
 
-class Knight
-  def can_move?(origin, destination)
-    origin_row = origin.slice(1,1).to_i
-    origin_col = origin.slice(0,1).ord
-    destination_row = destination.slice(1,1).to_i
-    destination_col = destination.slice(0,1).ord
+class BlackPawn < MoveCoordinates
+  def can_move?
+    result =  (@origin_col == @destination_col) && 
+            ((@destination_row == @origin_row-1 && @origin_row < 7) || 
+              (@destination_row >= @origin_row-2 && @origin_row == 7))
+  end
+end
 
-    result = ((origin_col +1 == destination_col) && (origin_row +2 == destination_row)) ||
-    ((origin_col +2 == destination_col) && (origin_row +1 == destination_row)) ||
-      ((origin_col +2 == destination_col) && (origin_row -1 == destination_row)) ||
-      ((origin_col +1 == destination_col) && (origin_row -2 == destination_row)) ||
-      ((origin_col -1 == destination_col) && (origin_row -2 == destination_row)) ||
-      ((origin_col -2 == destination_col) && (origin_row -1 == destination_row)) ||
-      ((origin_col -2 == destination_col) && (origin_row +1 == destination_row)) ||
-      ((origin_col -1 == destination_col) && (origin_row +2 == destination_row))
+class Knight < MoveCoordinates
+  def can_move?
+    result = ((@origin_col +1 == @destination_col) && (@origin_row +2 == @destination_row)) ||
+    ((@origin_col +2 == @destination_col) && (@origin_row +1 == @destination_row)) ||
+      ((@origin_col +2 == @destination_col) && (@origin_row -1 == @destination_row)) ||
+      ((@origin_col +1 == @destination_col) && (@origin_row -2 == @destination_row)) ||
+      ((@origin_col -1 == @destination_col) && (@origin_row -2 == @destination_row)) ||
+      ((@origin_col -2 == @destination_col) && (@origin_row -1 == @destination_row)) ||
+      ((@origin_col -2 == @destination_col) && (@origin_row +1 == @destination_row)) ||
+      ((@origin_col -1 == @destination_col) && (@origin_row +2 == @destination_row))
   end
 end
