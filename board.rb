@@ -23,10 +23,8 @@ class ChessBoard
 
   def load_board(file)
     File.open(file, 'r') do |file|
-      row = 8
-      file.each do |line|
-        parse_board_line(line, row)
-        row -= 1
+      file.each_with_index do |line, index|
+        parse_board_line(line, 8-index)
       end
     end
   end
