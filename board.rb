@@ -4,7 +4,7 @@ require_relative 'pieces'
 class ChessBoard
   def initialize
     @board = {
-      "a8" => "bR", "b8" => "bN", "c8" => "bB" , "d8" => "bQ", "e8" => "bK", "f8" => "bB", "g8" => "bN", "h8" => "bR", 
+      "a8" => "bR", "b8" => "bN", "c8" => "bB" , "d8" => "bQ", "e8" => "bK", "f8" => "bB", "g8" => "bN", "h8" => "bR",
       "a7" => "bP", "b7" => "bP", "c7" => "bP" , "d7" => "bP", "e7" => "bP", "f7" => "bP", "g7" => "bP", "h7" => "bP",
       "a6" => "--", "b6" => "--", "c6" => "--" , "d6" => "--", "e6" => "--", "f6" => "--", "g6" => "--", "h6" => "--",
       "a5" => "--", "b5" => "--", "c5" => "--" , "d5" => "--", "e5" => "--", "f5" => "--", "g5" => "--", "h5" => "--",
@@ -22,13 +22,13 @@ class ChessBoard
   end
 
   def load_board(file)
-    file = File.open(file, 'r')
-    row = 8
-    file.each do |line| 
-      parse_board_line(line, row)
-      row -= 1
+    File.open(file, 'r') do |file|
+      row = 8
+      file.each do |line|
+        parse_board_line(line, row)
+        row -= 1
+      end
     end
-    file.close
   end
 
   def print_board
@@ -46,7 +46,7 @@ class ChessBoard
   def parse_board_line(line, row)
     col = 1
     row_pieces = line.split(" ")
-    row_pieces.each do |piece| 
+    row_pieces.each do |piece|
       @board[("a".ord + col - 1).chr + row.to_s] = piece
       col += 1
     end
