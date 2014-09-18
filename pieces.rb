@@ -2,8 +2,7 @@ require_relative './piece_factory'
 
 class Piece
 
-  def initialize(board, origin, destination)
-    @board = board
+  def initialize(origin, destination)
     @origin = origin
     @destination = destination
   end
