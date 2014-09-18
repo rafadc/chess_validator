@@ -42,11 +42,9 @@ class ChessBoard
   end
 
   def parse_board_line(line, row)
-    col = 1
     row_pieces = line.split(" ")
-    row_pieces.each do |piece|
-      @board[("a".ord + col - 1).chr + row.to_s] = piece
-      col += 1
+    row_pieces.each_with_index do |piece, index|
+      @board[("a".ord + index).chr + row.to_s] = piece
     end
   end
 
