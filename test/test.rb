@@ -19,25 +19,6 @@ smoves.each do |x|
 end
 smoves.close
 
-# puts board1.check("a7 a6")
-# puts board1.check("a7 a5")
-# puts board1.check("a7 a4")
-# puts board1.check("a2 a3")
-# puts board1.check("a2 a4")
-# puts board1.check("a2 a5")
 
-# horse = Knight.new
-
-# puts horse.can_move?("b1", "c3")
-# puts horse.can_move?("e5", "g6")
-# puts horse.can_move?("e5", "g4")
-# puts horse.can_move?("e5", "f3")
-# puts horse.can_move?("e5", "d3")
-# puts horse.can_move?("e5", "c4")
-# puts horse.can_move?("e5", "d7")
-# puts horse.can_move?("e5", "c6")
-
-
-# puts horse.can_move?("e5", "g9")
-
-# puts board1.check_move("b8 a6")
+board2 = ChessBoard.new
+board2.load_board("complex_board.txt")

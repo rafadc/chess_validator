@@ -25,13 +25,28 @@ class ChessBoard
   end
 
   def load_board(file)
-    # unfinished !!!!!!!!!!!!!!!!!!!!!!!!!!
     file = File.open(file, 'r')
+    row = 8
     file.each do |line|
-      row = line.split(" ")
-
+      col = 1
+      row_line = line.split(" ")
+      row_line.each do |piece| 
+        @board[("a".ord + col - 1).chr + row.to_s] = piece
+        col += 1
+# binding.pry
+      end
+      row -= 1
     end
     file.close
+
+    print_board
+  end
+
+  def print_board
+    @board.each do |square, piece|
+      print piece + " "
+      puts if square.slice(0,1)=="h"
+    end
   end
 
 
